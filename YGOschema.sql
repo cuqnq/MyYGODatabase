@@ -10,7 +10,8 @@ CREATE TABLE cards (
 	card_type VARCHAR(10) NOT NULL,
 	monster_type VARCHAR(25),
 
---There are many monster summoning mechanics in Yu-Gi-Oh! Each has their own unique ruling and cannot intertwine except Pendulum.
+--There are many monster summoning mechanics in Yu-Gi-Oh! Each has their own unique ruling that cannot intertwine.
+--Pendulum are exceptions to this ruling.
 	is_normal BOOLEAN NOT NULL DEFAULT FALSE,
 	is_effect BOOLEAN NOT NULL DEFAULT FALSE,
 	is_fusion BOOLEAN NOT NULL DEFAULT FALSE,

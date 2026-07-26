@@ -102,16 +102,17 @@ def add_card(
     conn.commit()
 
 add_card(
-    "Dark Magician",
-    "LOB-005",
-    "Ultra Rare",
+    "Gem-Knight Pearl",
+    "BP01-EN031",
+    "Common Rare",
     "Monster",
-    monster_type="Spellcaster",
-    is_normal=True,
-    level_rank=7,
-    monster_attribute="DARK",
-    attack=2500,
-    defense=2100
+    monster_type="Rock",
+    is_xyz=True,
+    extra_deck=True,
+    level_rank=4,
+    monster_attribute="Earth",
+    attack=2600,
+    defense=1900
 )
 
 cur.close()
