@@ -1,10 +1,11 @@
 import psycopg2
-
+from JSONreader import readJSON
 from connect2DB import DB_Connection
 
 conn, cur = DB_Connection()
 
 def cardSearcher():
+    looking = readJSON()
     print("card is searched!")
 
 
