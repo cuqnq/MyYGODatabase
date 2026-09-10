@@ -6,7 +6,6 @@ from JSONreader import readJSON
 conn, cur = DB_Connection()
 
 
-data = readJSON()
-print(data)
+user_card = input("What card do you want to search?\n")
 
 

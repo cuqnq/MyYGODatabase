@@ -1,8 +1,18 @@
-import psycopg2
-
 from connect2DB import DB_Connection
 
-conn, cur = DB_Connection()
+def get_all_cards():
+    conn, cur = DB_Connection()
+    if conn is None:
+        return []
+
+    cur.execute("SELECT * FROM cards ORDER BY id")
+    rows = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return [dict(row) for row in rows]
+
 
 def add_card(
     card_name,
@@ -32,6 +42,11 @@ def add_card(
     overframe=False,
     quantity=1
 ):
+
+    conn, cur = DB_Connection()
+    if conn is None:
+        return None
+
 
     columns = [
         "card_name",
@@ -97,23 +112,12 @@ def add_card(
         quantity
     )
 
-    sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders})"
+    sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders}) RETURNING id"
     cur.execute(sqlPush, card_info)
+    new_id = cur.fetchone()["id"]
     conn.commit()
 
-add_card(
-    "Gem-Knight Pearl",
-    "BP01-EN031",
-    "Common Rare",
-    "Monster",
-    monster_type="Rock",
-    is_xyz=True,
-    extra_deck=True,
-    level_rank=4,
-    monster_attribute="Earth",
-    attack=2600,
-    defense=1900
-)
+    cur.close()
+    conn.close()
 
-cur.close()
-conn.close()
+    return new_id
