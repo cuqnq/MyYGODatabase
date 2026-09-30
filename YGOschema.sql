@@ -40,4 +40,7 @@ CREATE TABLE cards (
 	overframe BOOLEAN NOT NULL DEFAULT FALSE,
 --
 	quantity INT NOT NULL DEFAULT 0
+
+--Card Image
+	image_url VARCHAR(255);
 );
