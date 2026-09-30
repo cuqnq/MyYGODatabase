@@ -40,7 +40,8 @@ def add_card(
     unknown_def=False,
     alternative_art=False,
     overframe=False,
-    quantity=1
+    quantity=1,
+    image_url = None
 ):
 
     conn, cur = DB_Connection()
@@ -74,7 +75,8 @@ def add_card(
         "unknown_def",
         "alternative_art",
         "overframe",
-        "quantity"
+        "quantity",
+        "image_url"
     ]
 
     placeholders = ", ".join(["%s"] * len(columns))
@@ -109,7 +111,8 @@ def add_card(
         unknown_def,
         alternative_art,
         overframe,
-        quantity
+        quantity,
+        image_url
     )
 
     sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders}) RETURNING id"
