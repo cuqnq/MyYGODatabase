@@ -47,7 +47,7 @@ def import_cards():
             extra_deck=card["extra_deck"],
             spell_trap_type=card["spell_trap_type"],
             level_rank=card["level_rank"],
-            monster_attribute=card["mon_attribute"],
+            monster_attribute=card["monster_attribute"],
             link_arrows=card["link_arrows"],
             pendulum_scale=card["pendulum_scale"],
             attack=card["attack"],

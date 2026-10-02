@@ -1,3 +1,4 @@
+import psycopg2
 from connect2DB import DB_Connection
 
 def get_all_cards():
@@ -116,11 +117,20 @@ def add_card(
     )
 
     sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders}) RETURNING id"
-    cur.execute(sqlPush, card_info)
-    new_id = cur.fetchone()["id"]
-    conn.commit()
+    
+    try:
+        cur.execute(sqlPush, card_info)
+        new_id = cur.fetchone()["id"]
+        conn.commit()
+        return new_id
 
-    cur.close()
-    conn.close()
+    except psycopg2.Error as e:
+        #Undos half finished INSERT so the database isn't left in a bad state.
+        conn.rollback()
+        print("ERROR adding card: ", e)
+        return None
 
-    return new_id
+    finally:
+        #Finally runs regardless the try worked or failed, so the connection always closes
+        cur.close()
+        conn.close()

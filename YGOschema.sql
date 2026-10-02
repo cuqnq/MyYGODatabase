@@ -27,7 +27,7 @@ CREATE TABLE cards (
 
 	spell_trap_type VARCHAR(20),
 	level_rank INTEGER,
-	mon_attribute VARCHAR(20),
+	monster_attribute VARCHAR(20),
 	link_arrows VARCHAR(100),
 	pendulum_scale INTEGER,
 	attack INTEGER,
@@ -39,7 +39,7 @@ CREATE TABLE cards (
 	alternative_art BOOLEAN NOT NULL DEFAULT FALSE,
 	overframe BOOLEAN NOT NULL DEFAULT FALSE,
 --
-	quantity INT NOT NULL DEFAULT 0
+	quantity INT NOT NULL DEFAULT 1,
 
 --Card Image
 	image_url VARCHAR(255);

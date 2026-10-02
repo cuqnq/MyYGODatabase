@@ -1,14 +1,15 @@
 import psycopg2
 from JSONreader import readJSON
 from connect2DB import DB_Connection
-from main import user_card
-conn, cur = DB_Connection()
+
 
 # def cardSearcher():
 #     looking = readJSON()
 #     print("card is searched!")
 
 def cardSearcher(user_card):
+    # TODO: Work in progress. You can check out my thoughts below.
+    pass
 
 
 
@@ -20,7 +21,4 @@ No exact match, would be easier for the user if it's partial fuzzy.
 Not case sensitive, the search algorithm will lowercase all of the user's inputs before commiting to the search.
 
 Typeahead search? Is that possible with no UI? Or that will be a future feature. 
-
-
-
 '''
