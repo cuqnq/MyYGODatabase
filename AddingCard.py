@@ -1,19 +1,6 @@
 import psycopg2
 from connect2DB import DB_Connection
 
-def get_all_cards():
-    conn, cur = DB_Connection()
-    if conn is None:
-        return []
-
-    cur.execute("SELECT * FROM cards ORDER BY id")
-    rows = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    return [dict(row) for row in rows]
-
 
 def add_card(
     card_name,
@@ -116,6 +103,7 @@ def add_card(
         image_url
     )
 
+
     sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders}) RETURNING id"
     
     try:
@@ -134,3 +122,4 @@ def add_card(
         #Finally runs regardless the try worked or failed, so the connection always closes
         cur.close()
         conn.close()
+
