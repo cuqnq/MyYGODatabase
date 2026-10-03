@@ -1,4 +1,4 @@
-from UpdatingCard import update_quantity
+from UpdatingCards import update_quantity
 
 print(update_quantity(1, 3))   # should print the whole card, with quantity 3
 print(update_quantity(9999, 3))          # should print None
