@@ -6,6 +6,7 @@ from UpdatingCards import update_quantity
 app = Flask(__name__)
 CORS(app)  # allows the React dev server (different port) to call this API
 
+#Read function
 @app.route("/api/collection", methods=["GET"])
 def get_collection():
     cards = get_all_cards()

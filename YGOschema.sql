@@ -39,7 +39,7 @@ CREATE TABLE cards (
 	alternative_art BOOLEAN NOT NULL DEFAULT FALSE,
 	overframe BOOLEAN NOT NULL DEFAULT FALSE,
 --
-	quantity INT NOT NULL DEFAULT 1,
+	quantity INT NOT NULL DEFAULT 1 CONSTRAINT quantity_not_negative CHECK (quantity >= 0),
 
 --Card Image
 	image_url VARCHAR(255);
