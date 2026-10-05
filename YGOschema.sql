@@ -39,8 +39,9 @@ CREATE TABLE cards (
 	alternative_art BOOLEAN NOT NULL DEFAULT FALSE,
 	overframe BOOLEAN NOT NULL DEFAULT FALSE,
 --
+--Quantity can never be negative. Cards that reach 0 are deleted by change_quantity().
 	quantity INT NOT NULL DEFAULT 1 CONSTRAINT quantity_not_negative CHECK (quantity >= 0),
 
---Card Image
-	image_url VARCHAR(255);
+--Card art URL pulled from YGOPRODeck by import_cards.py
+	image_url VARCHAR(255)
 );
