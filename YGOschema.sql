@@ -21,7 +21,7 @@ CREATE TABLE cards (
     is_ritual BOOLEAN NOT NULL DEFAULT FALSE,
     is_pendulum BOOLEAN NOT NULL DEFAULT FALSE,
 
---Monster subtypes (the 3rd slot of the type line, e.g. [Dragon / Synchro / Tuner / Effect])
+--Monster subtypes (the 3rd slot of the type line, ex: [Dragon / Synchro / Tuner / Effect])
     is_tuner BOOLEAN NOT NULL DEFAULT FALSE,
     is_flip BOOLEAN NOT NULL DEFAULT FALSE,
     is_gemini BOOLEAN NOT NULL DEFAULT FALSE,

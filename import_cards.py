@@ -44,6 +44,14 @@ def import_cards():
             is_link=card["is_link"],
             is_ritual=card["is_ritual"],
             is_pendulum=card["is_pendulum"],
+            #Below are Monster substypes, .get() falls back to False if a card in the JSON leaves them out
+            is_tuner=card.get("is_tuner", False),
+            is_flip=card.get("is_flip", False),
+            is_gemini=card.get("is_gemini", False),
+            is_spirit=card.get("is_spirit", False),
+            is_toon=card.get("is_toon", False),
+            is_union=card.get("is_union", False),
+            #-----------------------------------------
             extra_deck=card["extra_deck"],
             spell_trap_type=card["spell_trap_type"],
             level_rank=card["level_rank"],
