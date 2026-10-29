@@ -4,7 +4,7 @@ from AddingCard import add_card
 
 YGOPRODECK_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 
-def get_image_urls(card_names):
+def get_card_details(card_names):
     unique_names = "|".join(sorted(set(card_names)))
     response = requests.get(YGOPRODECK_URL, params={"name": unique_names})
     response.raise_for_status()
@@ -12,7 +12,12 @@ def get_image_urls(card_names):
 
     image_lookup = {}
     for card in data:
-        image_lookup[card["name"]] = card["card_images"][0]["image_url"]
+        image_lookup[card["name"]] = {
+            "description": card["desc"],
+            "link_rating": card.get("linkval", None),
+            #0 represents the first artwork. card_images is a list of every artwork the card has.
+            "image_url": card["card_images"][0]["image_url"],
+        }
     return image_lookup
 
 
@@ -23,12 +28,19 @@ def import_cards():
         return
 
     card_names = [card["card_name"] for card in cards]
-    image_lookup = get_image_urls(card_names)
+    image_lookup = get_card_details(card_names)
 
     for card in cards:
-        image_url = image_lookup.get(card["card_name"])
-        if image_url is None:
-            print(f"WARNING: no image found for '{card['card_name']}'")
+        card_features = image_lookup.get(card["card_name"])
+        if card_features is None:
+            print(f"WARNING: no feature found for '{card['card_name']}'")
+            description = None
+            link_rating = None
+            image_url = None
+        else:
+            description = card_features["description"]
+            link_rating = card_features["link_rating"]
+            image_url = card_features["image_url"]
 
         new_id = add_card(
             card_name=card["card_name"],
@@ -65,7 +77,9 @@ def import_cards():
             alternative_art=card["alternative_art"],
             overframe=card["overframe"],
             quantity=card["quantity"],
-            image_url=image_url
+            image_url=image_url,
+            description=description,
+            link_rating=link_rating
         )
         print(f"Added '{card['card_name']}' with id {new_id}")
 

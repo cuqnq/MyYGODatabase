@@ -10,6 +10,9 @@ CREATE TABLE cards (
     card_type VARCHAR(10) NOT NULL,
     monster_type VARCHAR(25),
 
+--Card effect or flavor text pulled from YGOPRODeck by import_cards.py (TEXT has no length limit)
+    description TEXT,
+
 --There are many monster summoning mechanics in Yu-Gi-Oh! Each has their own unique ruling that cannot intertwine.
 --Pendulum are exceptions to this ruling.
     is_normal BOOLEAN NOT NULL DEFAULT FALSE,
@@ -36,7 +39,13 @@ CREATE TABLE cards (
     spell_trap_type VARCHAR(20),
     level_rank INTEGER,
     monster_attribute VARCHAR(20),
+
+--Link monsters only have Link Rating (1-6) and arrow directions. Empty (NULL) for every other card.
+--Also does not have a DEF stat.
+    link_rating INTEGER,
     link_arrows VARCHAR(100),
+    CONSTRAINT link_has_no_def CHECK (is_link = FALSE OR (defense IS NULL AND unknown_def = FALSE)),
+
     pendulum_scale INTEGER,
     attack INTEGER,
     defense INTEGER,
@@ -51,8 +60,4 @@ CREATE TABLE cards (
     quantity INT NOT NULL DEFAULT 1 CONSTRAINT quantity_not_negative CHECK (quantity >= 0),
 
 --Card art URL pulled from YGOPRODeck by import_cards.py
-    image_url VARCHAR(255),
-
---Link monsters never have a DEF stat
-    CONSTRAINT link_has_no_def CHECK (is_link = FALSE OR (defense IS NULL AND unknown_def = FALSE))
-);
+    image_url VARCHAR(255));
