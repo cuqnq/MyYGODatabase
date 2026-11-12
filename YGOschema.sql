@@ -60,4 +60,10 @@ CREATE TABLE cards (
     quantity INT NOT NULL DEFAULT 1 CONSTRAINT quantity_not_negative CHECK (quantity >= 0),
 
 --Card art URL pulled from YGOPRODeck by import_cards.py
-    image_url VARCHAR(255));
+    image_url VARCHAR(255),
+
+--One row per printing: the same set code + rarity + art + frame can only appear once.
+--Owning more copies raises quantity instead of adding a new row.
+--(ex: RA01-EN008(Ash Blossom & Joyous Spring) Secret Rare and RA01-EN008 Platinum Secret Rare are 2 rows, but never 2 rows of the same one)
+    ALTER TABLE cards ADD CONSTRAINT card_differentiator UNIQUE (set_code, overframe, alternative_art, rarity)
+);
