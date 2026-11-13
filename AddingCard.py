@@ -127,9 +127,12 @@ def add_card(
         image_url
     )
 
+    sqlPush = f"""INSERT INTO cards ({column_list}) VALUES ({placeholders})
+    ON CONFLICT ON CONSTRAINT card_differentiator
+    DO UPDATE SET quantity = cards.quantity + EXCLUDED.quantity
+    RETURNING id"""
 
-    sqlPush = f"INSERT INTO cards ({column_list}) VALUES ({placeholders}) RETURNING id"
-    
+
     try:
         cur.execute(sqlPush, card_info)
         new_id = cur.fetchone()["id"]
