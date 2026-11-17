@@ -80,12 +80,12 @@ def translate_card(api_card, set_code, rarity, quantity):
     #Link Rating and Link Arrows. Only Link monsters have these.
     link_rating = api_card.get("linkval", None)
 
-    #YGOPRODeck sends the arrows as a LIST, ex: ["Left", "Right", "Bottom-Left"].
-    #Our database stores them as ONE piece of text, ex: "Left, Right, Bottom-Left".
-    #", ".join(list) glues the list together with ", " BETWEEN each item.
+    #YGOPRODeck sends the arrows as a LIST. ( ["Left", "Right", "Bottom-Left"] )
+    #The database stores them as ONE piece of text, ex: "Left, Right, Bottom-Left".
     link_markers = api_card.get("linkmarkers", None)
     if link_markers:
         link_arrows = ", ".join(link_markers)
+        # ", ".join(list) glues the list together with ", " BETWEEN each item.
     else:
         link_arrows = None
 
