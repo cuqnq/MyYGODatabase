@@ -76,6 +76,34 @@ def add_or_remove_copies(id):
     #6. Send back {"id", "quantity", "deleted"} so React knows what happened
     return jsonify(result)
 
+#POST /api/collection: Adds a card or upserts an existing card within the database
+#React sends only the user's choices (card_name, set_code, rarity, quantity)
+#Flask retrieves the rest of the information from YGOPRODeck
+@app.route("/api/collection", methods=["POST"])
+def add_new_card():
+    requestData = request.get_json(silent=True)
+
+    #Guard Clause 1: No body or the body isn't JSON
+    if requestData is None:
+        return jsonify({"error": "Request body must be JSON."}), 400
+
+    #Guard Clause 2: card_name, set_code, and rarity must each have text that isn't blank.
+    #requestData.get(field) gives None if the field is missing. None isn't a string, so isinstance catches it.
+    #.strip() clear spaces so " " counds as blank.
+    for field in ["card_name", "set_code", "rarity"]:
+        value = requestData.get(field)
+        if not isinstance(value, str) or value.strip() == "":
+            return jsonify({"error": f"Request body must include '{field}'."}), 400
+
+    #Guard Clause 3: Quantity must be a whole number, 1 or higher. Rejected if:
+    # > it isn't a whole number ("2", 1.5, missing),
+    # > it's True/False (Python counts True as 1),
+    # > or it's less than 1 (0, -3).
+    quantity = requestData.get("quantity")
+    if not isinstance(quantity, int) or isinstance(quantity, bool) or quantity < 1:
+        return jsonify({"error": "Quantity must be a whole number, 0 or higher."}), 400
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
